@@ -1,4 +1,4 @@
-import { themes } from 'mdx-deck';
+import { themes, Image } from 'mdx-deck';
 import Highlighter from 'react-syntax-highlighter';
 import prismStyle from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
 
@@ -15,13 +15,16 @@ export const theme = {
     },
 };
 
+import avatar from './images/avatar.jpeg';
+
 # :wave: Hello World
 
-<img src="https://avatars3.githubusercontent.com/u/5205440?s=460&v=4" />
+<img src={avatar} />
 <br />
 <div>Eric Wyne</div>
 <div>@ecwyne</div>
 <img src="https://www.commissionbuddies.com/wp-content/uploads/2018/04/CB_Logos_FINAL_white_30px.png" />
+
 <br />
 
 ---
@@ -101,6 +104,95 @@ export const theme = {
 -   :white_check_mark: Scalable
 -   :grey_question: Secure
 -   :grey_question: Transactional
+
+---
+
+# What about data?
+
+---
+
+# MongoDB
+
+-   :white_check_mark: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :warning: Scalable
+-   :warning: Secure
+-   :x: Transactional
+
+---
+
+# DynamoDB
+
+-   :x: Rapid Development
+-   :warning: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :warning: Secure
+-   :x: Transactional (circa 2017)
+
+---
+
+# Firebase
+
+-   :white_check_mark: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :white_check_mark: Secure
+-   :x: Transactional
+
+---
+
+# FaunaDB
+
+-   :white_check_mark: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :white_check_mark: Secure
+-   :white_check_mark: Transactional
+
+---
+
+# :tada: FaunaDB :tada:
+
+-   :white_check_mark: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :white_check_mark: Secure
+-   :white_check_mark: Transactional
+
+---
+
+# Additionally...
+
+-   :cloud: Built for serverless
+-   :clock2: Built-in temporality
+-   :earth_americas: Hands-free geo-distribution
+-   :zap: Real-time streaming (in beta)
+
+---
+
+# Next.js + FaunaDb :rocket: :rocket: :rocket:
+
+---
+
+import signup from './images/signup.png';
+
+#### Visit https://dashboard.fauna.com
+
+<Image src={signup} style={{ width: '90%', backgroundSize: 'contain' }}></Image>
+
+---
+
+import newdb from './images/newdb.png';
+
+#### Create a database
+
+<Image src={newdb} style={{ width: '70%', backgroundSize: 'contain' }}></Image>
+
+---
+
+import dbhome from './images/dbhome.png';
+
+<Image src={dbhome} style={{ width: '90%', backgroundSize: 'contain' }}></Image>
 
 ---
 
