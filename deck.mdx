@@ -1,4 +1,4 @@
-import { themes, Image } from 'mdx-deck';
+import { themes, Image, Split } from 'mdx-deck';
 import Highlighter from 'react-syntax-highlighter';
 import prismStyle from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
 
@@ -109,6 +109,36 @@ import avatar from './images/avatar.jpeg';
 
 # What about data?
 
+-   :grey_question: Secure
+-   :grey_question: Transactional
+
+---
+
+import tree from './images/tree.png';
+
+<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+
+
+<div>
+    <img src={tree} style={{ width: '100%', height: '100%' }} />
+</div>
+
+<div>
+
+
+# An example...
+
+-   Double ledger accounting
+-   Accounts cannot go negative
+-   Data consistency is vital
+-   ACID compliant transactions
+
+</div>
+
+
+</div>
+
+
 ---
 
 # MongoDB
@@ -166,11 +196,26 @@ import avatar from './images/avatar.jpeg';
 -   :cloud: Built for serverless
 -   :clock2: Built-in temporality
 -   :earth_americas: Hands-free geo-distribution
+-   :atom_symbol: GraphQL API
+-   :muscle: Powerful Query Language (FQL)
 -   :zap: Real-time streaming (in beta)
 
 ---
 
 # Next.js + FaunaDb :rocket: :rocket: :rocket:
+
+---
+
+### A note on GraphQL...
+
+<iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/KlUPiQaTp0I"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+></iframe>
 
 ---
 
@@ -186,7 +231,7 @@ import newdb from './images/newdb.png';
 
 #### Create a database
 
-<Image src={newdb} style={{ width: '70%', backgroundSize: 'contain' }}></Image>
+<Image src={newdb} style={{ height: '50%', backgroundSize: 'contain' }}></Image>
 
 ---
 
