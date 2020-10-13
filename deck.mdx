@@ -1,0 +1,124 @@
+import { themes } from 'mdx-deck';
+import Highlighter from 'react-syntax-highlighter';
+import prismStyle from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
+
+export const theme = {
+    ...themes.default,
+    components: {
+        pre: themes.prism.components.pre,
+        code: props => {
+            return themes.prism.components.code({
+                ...props,
+                style: prismStyle,
+            });
+        },
+    },
+};
+
+# :wave: Hello World
+
+<img src="https://avatars3.githubusercontent.com/u/5205440?s=460&v=4" />
+<br />
+<div>Eric Wyne</div>
+<div>@ecwyne</div>
+<img src="https://www.commissionbuddies.com/wp-content/uploads/2018/04/CB_Logos_FINAL_white_30px.png" />
+<br />
+
+---
+
+# Company Backgorund
+
+-   :date: Founded 2017
+-   :book: Origin Story
+-   :credit_card: Processing Referral Network
+
+---
+
+# Technical Requirements
+
+-   :zap: Rapid Development
+-   :woman_in_lotus_position: Flexible Architecture
+-   :chart_with_upwards_trend: Scalable
+-   :lock: Secure
+-   :heavy_dollar_sign: Transactional
+
+---
+
+# Meteor.js
+
+-   :white_check_mark: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :x: Scalable
+-   :white_check_mark: Secure
+-   :x: Transactional
+
+---
+
+# ~~Meteor.js~~
+
+-   :white_check_mark: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :x: Scalable
+-   :white_check_mark: Secure
+-   :x: Transactional
+
+---
+
+# Gatsby/Netlify Functions
+
+-   :warning: Rapid Development
+-   :warning: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :grey_question: Secure
+-   :grey_question: Transactional
+
+---
+
+# ~~Gatsby/Netlify Functions~~
+
+-   :warning: Rapid Development
+-   :warning: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :grey_question: Secure
+-   :grey_question: Transactional
+
+---
+
+# Next.js + Now.sh (circa 2017)
+
+-   :white_check_mark: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :grey_question: Secure
+-   :grey_question: Transactional
+
+---
+
+# :tada: Next.js (v9.0) :tada:
+
+-   :rocket: Rapid Development
+-   :white_check_mark: Flexible Architecture
+-   :white_check_mark: Scalable
+-   :grey_question: Secure
+-   :grey_question: Transactional
+
+---
+
+```typescript
+import { GetServerSideProps } from 'next';
+export const getServerSideProps: GetServerSideProps = ctx => {
+    return {
+        props: {
+            secret: ctx.cookies['FAUNA_COOKIE'],
+        },
+    };
+};
+```
+
+---
+
+## This is my deck
+
+---
+
+## The End
