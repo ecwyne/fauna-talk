@@ -1,6 +1,8 @@
 import { themes, Image, Split } from 'mdx-deck';
 import Highlighter from 'react-syntax-highlighter';
 import prismStyle from 'react-syntax-highlighter/dist/esm/styles/prism/vs-dark';
+import { CodeSurfer } from 'code-surfer';
+import { vsDark } from '@code-surfer/themes';
 
 export const theme = {
     ...themes.default,
@@ -275,9 +277,10 @@ import collectionlist from './images/collectionlist.png';
 
 ---
 
-# FQL
+<CodeSurfer theme={vsDark}>
 
-```typescript
+
+```ts title="FQL"
 import { query as q } from 'faunadb';
 
 const data = { handle: 'ecwyne' };
@@ -286,11 +289,16 @@ const usersCollection = q.Collection('users');
 const createUserQuery = q.Create(usersCollection, { data });
 ```
 
+</CodeSurfer>
+
+
+---
+
 import drivers from './images/drivers.png';
 
 <Image
     src={drivers}
-    style={{ height: '25%', backgroundSize: 'contain' }}
+    style={{ height: '50%', backgroundSize: 'contain' }}
 ></Image>
 
 ---
@@ -315,29 +323,33 @@ import updatepassword from './images/updatepassword.png';
 
 ---
 
-# FaunaDB Client
+import newindex from './images/newindex.png';
 
-```typescript
-import { Client } from 'faunadb';
+#### Create an index
 
-const client = new Client({ secret: '...' });
-
-await client.query(query).then(...)
-
-```
+<Image
+    src={newindex}
+    style={{ height: '75%', width: '90%', backgroundSize: 'contain' }}
+></Image>
 
 ---
 
-```typescript
-import { Client, query as q } from 'faunadb';
+## Let's jump into some code!
 
-const handler = async (req, res) => {
-    const { handle, password } = req.body;
-    const client = new Client({ secret: '???' });
-};
+---
+
+<CodeSurfer theme={vsDark}>
+
+
+```ts title="FaunaDB Client"
+import { Client } from 'faunadb';
+
+const client = new Client({ secret: '...' });
+await client.query(query).then(...)
 ```
 
-#### pages/api/login.js
+</CodeSurfer>
+
 
 ---
 
@@ -359,57 +371,18 @@ import serverkey from './images/serverkey.png';
 
 ---
 
-```typescript
+<CodeSurfer theme={vsDark}>
+
+
+```ts 3:5 title="pages/api/login.ts" subtitle="Instantiate Fauna Client"
 import { Client, query as q } from 'faunadb';
 
-const handler = async (req, res) => {
-    const { handle, password } = req.body;
-    const client = new Client({
-        secret: 'fnAD4lN6LsACDZCBTVS5LkxWHMSpSTAuDLTImMe7',
-    });
-
-    // TODO Match user by handle
-    // TODO Use password to get user secret
-};
-```
-
-#### pages/api/login.js
-
----
-
-import newindex from './images/newindex.png';
-
-<Image
-    src={newindex}
-    style={{ height: '75%', width: '90%', backgroundSize: 'contain' }}
-></Image>
-
----
-
-```typescript
-import { Client, query as q } from 'faunadb';
+const client = new Client({
+    secret: 'fnAD4lN6LsACDZCBTVS5LkxWHMSpSTAuDLTImMe7',
+});
 
 const handler = async (req, res) => {
     const { handle, password } = req.body;
-    const client = new Client({
-        secret: 'fnAD4lN6LsACDZCBTVS5LkxWHMSpSTAuDLTImMe7',
-    });
-    // Match user by handle
-    const matchedUser = q.Match(q.Index('userByHandle'), handle);
-    // TODO use password to get user secret
-};
-```
-
-#### pages/api/login.js
-
----
-
-```typescript
-const handler = async (req, res) => {
-    const { handle, password } = req.body;
-    const client = new Client({
-        secret: 'fnAD4lN6LsACDZCBTVS5LkxWHMSpSTAuDLTImMe7',
-    });
     // Match user by handle
     const matchedUser = q.Match(q.Index('userByHandle'), handle);
     // Use password to get user secret
@@ -417,13 +390,364 @@ const handler = async (req, res) => {
         .query(q.Login(matchedUser, { password }))
         .then(({ secret }) => res.send(secret));
 };
+
+export default handler;
 ```
 
-#### pages/api/login/login.js
+```ts 8 title="pages/api/login.ts" subtitle="Destructure handle and password"
+import { Client, query as q } from 'faunadb';
+
+const client = new Client({
+    secret: 'fnAD4lN6LsACDZCBTVS5LkxWHMSpSTAuDLTImMe7',
+});
+
+const handler = async (req, res) => {
+    const { handle, password } = req.body;
+    // Match user by handle
+    const matchedUser = q.Match(q.Index('userByHandle'), handle);
+    // Use password to get user secret
+    client
+        .query(q.Login(matchedUser, { password }))
+        .then(({ secret }) => res.send(secret));
+};
+
+export default handler;
+```
+
+```ts 9:10 title="pages/api/login.ts"  subtitle="Match user by handle"
+import { Client, query as q } from 'faunadb';
+
+const client = new Client({
+    secret: 'fnAD4lN6LsACDZCBTVS5LkxWHMSpSTAuDLTImMe7',
+});
+
+const handler = async (req, res) => {
+    const { handle, password } = req.body;
+    // Match user by handle
+    const matchedUser = q.Match(q.Index('userByHandle'), handle);
+    // Use password to get user secret
+    client
+        .query(q.Login(matchedUser, { password }))
+        .then(({ secret }) => res.send(secret));
+};
+
+export default handler;
+```
+
+```ts 11:14 title="pages/api/login.ts" subtitle="Use password to get user secret"
+import { Client, query as q } from 'faunadb';
+
+const client = new Client({
+    secret: 'fnAD4lN6LsACDZCBTVS5LkxWHMSpSTAuDLTImMe7',
+});
+
+const handler = async (req, res) => {
+    const { handle, password } = req.body;
+    // Match user by handle
+    const matchedUser = q.Match(q.Index('userByHandle'), handle);
+    // Use password to get user secret
+    client
+        .query(q.Login(matchedUser, { password }))
+        .then(({ secret }) => res.send(secret));
+};
+
+export default handler;
+```
+
+</CodeSurfer>
+
 
 ---
 
-# Links
+<CodeSurfer theme={vsDark}>
+
+
+```ts showNumbers title="fauna-hooks.ts"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 24:25 title="fauna-hooks.ts" subtitle="Here's the goal"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 1:3 title="fauna-hooks.ts" subtitle="Using these technologies"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 5 title="fauna-hooks.ts" subtitle="Create zustand store"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 7,8,12 title="fauna-hooks.ts" subtitle="Login from anywhere"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 7,13 title="fauna-hooks.ts" subtitle="Update store with secret"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 16,17 title="fauna-hooks.ts" subtitle="Read secret from store"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 16,18 title="fauna-hooks.ts" subtitle="Build SWR key"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 16,19 title="fauna-hooks.ts" subtitle="Call useSwr with fetcher"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+```ts 22 title="fauna-hooks.ts" subtitle="Putting it all together"
+import { Client, query as q } from 'faunadb';
+import useSwr from 'swr';
+import create from 'zustand';
+
+const useStore = create(() => ({ secret: '' }));
+
+export const login = async (handle, password) => {
+    const secret = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle, password }),
+    }).then(r => r.text());
+    useStore.setState({ secret });
+};
+
+export function useQuery(query) {
+    const secret = useStore(state => state.secret);
+    const key = secret ? [secret, JSON.stringify(query)] : null;
+    return useSwr(key, secret => new Client({ secret }).query(query));
+}
+
+export const useIdentity = () => useQuery(q.Get(q.Identity()));
+
+// Usage
+// const { data, error, isValidating } = useIdentity();
+```
+
+</CodeSurfer>
+
+
+---
+
+# Thanks! :wave:
 
 Fauna Dashboard: https://dashboard.fauna.com
 
@@ -432,3 +756,5 @@ Fauna Docs: https://docs.fauna.com
 Commission Buddies: https://commissionbuddies.com
 
 Join Commission Buddies: https://bit.ly/commbuds-nextjs
+
+Slides: https://nextjs-conf-fauna.vercel.app
